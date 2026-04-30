@@ -1,15 +1,18 @@
 class Solution {
-public:
-    int subarraySum(vector<int>& nums, int k) {
-      map<int, int> mpp;
-      mpp[0]=1;
-      int prefix=0, cnt=0;
-      for(int i=0;i<nums.size();i++){
-        prefix+=nums[i];
-        int remove=prefix-k;
-        cnt+=mpp[remove];
-        mpp[prefix]+=1;
-      }
-     return cnt;   
+  public:
+    int knapsack(int W, vector<int> &val, vector<int> &wt) {
+        int n = val.size();
+        vector<int>dp(W+1,0);
+        
+        for(int i=n-1;i>=0;i--){
+            for(int j=W;j>=1;j--){
+                
+                int a = dp[j];
+                int b = (wt[i]<=j)?val[i] + dp[j-wt[i]]:0;
+                dp[j] = max(a,b);
+            }
+        }
+        
+        return dp[W];
     }
 };
